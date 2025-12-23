@@ -3,1533 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เมนูอาหาร - ร้านหวานเจี๊ยบ</title>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+    <title>WAHN JEAB Sukhumvit97/1 - Food Gallery & Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* ==================== Global Styles ==================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x: hidden;
-    background-color: #fff;
-    color: #000;
-    line-height: 1.6;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.dark-mode {
-    background-color: #0a0a0a;
-    color: #fff;
-}
-
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-}
-
-/* ==================== Navigation Bar ==================== */
-#navbar {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 1rem 0;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
-
-#navbar.scrolled {
-    background: rgba(0, 0, 0, 0.98);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    padding: 0.75rem 0;
-}
-
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    z-index: 1001;
-}
-
-.logo img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #fff;
-}
-
-.logo-text h1 {
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: 700;
-}
-
-.logo-text p {
-    font-size: 0.75rem;
-    color: #ccc;
-    font-style: italic;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2.5rem;
-    align-items: center;
-}
-
-.nav-menu li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-    padding: 0.5rem 0;
-}
-
-.nav-menu li a:hover,
-.nav-menu li a.active {
-    color: #ddd;
-}
-
-.nav-menu li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: width 0.3s ease;
-}
-
-.nav-menu li a:hover::after,
-.nav-menu li a.active::after {
-    width: 100%;
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    z-index: 1001;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: #fff;
-    transition: all 0.3s ease;
-    border-radius: 3px;
-}
-
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
-}
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
-}
-
-/* ==================== Search Section ==================== */
-.search-section {
-    padding: 8rem 2rem 4rem;
-    background: linear-gradient(to bottom, #000, #1a1a1a);
-    text-align: center;
-}
-
-.page-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    animation: fadeInUp 0.8s ease;
-}
-
-.page-subtitle {
-    font-size: 1.3rem;
-    color: #bbb;
-    margin-bottom: 3rem;
-    font-style: italic;
-    animation: fadeInUp 1s ease;
-}
-
-.search-box {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-    padding: 0.5rem 1.5rem;
-    transition: all 0.3s ease;
-    animation: fadeInUp 1.2s ease;
-}
-
-.search-box:focus-within {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-.search-box ion-icon {
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin-right: 1rem;
-}
-
-#menu-search {
-    flex: 1;
-    background: none;
-    border: none;
-    outline: none;
-    color: #fff;
-    font-size: 1rem;
-    padding: 0.75rem 0;
-}
-
-#menu-search::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* ==================== Menu Container ==================== */
-.menu-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-}
-
-/* ==================== Menu Page (Paper Effect) ==================== */
-.menu-page {
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    padding: 4rem 3rem;
-    margin-bottom: 4rem;
-    transition: all 0.4s ease;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-body.dark-mode .menu-page {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
-}
-
-.menu-page:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-}
-
-body.dark-mode .menu-page:hover {
-    box-shadow: 0 15px 50px rgba(255, 255, 255, 0.15);
-}
-
-/* ==================== Category Titles ==================== */
-.category-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #000;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    border-bottom: 3px solid #000;
-    padding-bottom: 1rem;
-}
-
-.category-subtitle {
-    font-size: 1.1rem;
-    color: #666;
-    text-align: center;
-    margin-bottom: 3rem;
-    font-style: italic;
-}
-
-.subcategory-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #000;
-    margin-top: 3rem;
-    margin-bottom: 0.5rem;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 0.75rem;
-}
-
-.subcategory-subtitle {
-    font-size: 0.95rem;
-    color: #888;
-    margin-bottom: 2rem;
-    font-style: italic;
-}
-
-/* ==================== Menu Items ==================== */
-.menu-items {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-}
-
-.menu-item:last-child {
-    border-bottom: none;
-}
-
-.menu-item:hover {
-    padding-left: 1rem;
-    background: rgba(0, 0, 0, 0.02);
-    border-radius: 10px;
-}
-
-.menu-name {
-    font-size: 1.15rem;
-    font-weight: 500;
-    color: #222;
-    flex-shrink: 0;
-}
-
-.menu-dots {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #ddd 10%, #ddd 90%, transparent);
-    margin: 0 1rem;
-}
-
-.menu-price {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #000;
-    flex-shrink: 0;
-}
-
-/* ==================== Footer ==================== */
-.footer {
-    padding: 3rem 2rem;
-    background: #000;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-content {
-    text-align: center;
-}
-
-.footer-logo {
-    margin-bottom: 1.5rem;
-}
-
-.footer-logo img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #fff;
-    margin-bottom: 1rem;
-}
-
-.footer-logo h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.3rem;
-    color: #fff;
-}
-
-.footer-logo p {
-    font-size: 0.9rem;
-    color: #aaa;
-    font-style: italic;
-}
-
-.footer-text {
-    color: #777;
-    font-size: 0.95rem;
-}
-
-/* ==================== Hidden Menu Items ==================== */
-.menu-item.hidden {
-    display: none;
-}
-
-/* ==================== Animations ==================== */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ==================== Responsive Design ==================== */
-
-/* Tablet */
-@media (max-width: 1024px) {
-    .page-title {
-        font-size: 3rem;
-    }
-    
-    .menu-page {
-        padding: 3rem 2.5rem;
-    }
-    
-    .category-title {
-        font-size: 2.2rem;
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    /* Navigation */
-    .nav-menu {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        height: 100vh;
-        width: 80%;
-        max-width: 320px;
-        flex-direction: column;
-        background: rgba(0, 0, 0, 0.98);
-        backdrop-filter: blur(20px);
-        padding: 6rem 2rem 2rem;
-        gap: 2rem;
-        transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.5);
-        align-items: flex-start;
-        justify-content: flex-start;
-        overflow-y: auto;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-menu li {
-        width: 100%;
-    }
-
-    .nav-menu li a {
-        display: block;
-        padding: 1rem 0;
-        font-size: 1.15rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .logo img {
-        width: 45px;
-        height: 45px;
-    }
-
-    .logo-text h1 {
-        font-size: 1.3rem;
-    }
-
-    .logo-text p {
-        font-size: 0.7rem;
-    }
-
-    .nav-container {
-        padding: 0 1.2rem;
-    }
-
-    /* Search Section */
-    .search-section {
-        padding: 6rem 1.5rem 3rem;
-    }
-
-    .page-title {
-        font-size: 2.5rem;
-    }
-
-    .page-subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
-    .search-box {
-        padding: 0.5rem 1.2rem;
-    }
-
-    /* Menu Container */
-    .menu-container {
-        padding: 3rem 1rem;
-    }
-
-    .menu-page {
-        padding: 2.5rem 1.5rem;
-        margin-bottom: 3rem;
-        border-radius: 15px;
-    }
-
-    .category-title {
-        font-size: 1.9rem;
-        padding-bottom: 0.75rem;
-    }
-
-    .category-subtitle {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .subcategory-title {
-        font-size: 1.5rem;
-        margin-top: 2.5rem;
-    }
-
-    .menu-items {
-        gap: 1.2rem;
-    }
-
-    .menu-item {
-        padding: 0.75rem 0;
-    }
-
-    .menu-name {
-        font-size: 1.05rem;
-    }
-
-    .menu-price {
-        font-size: 1.1rem;
-    }
-
-    .menu-dots {
-        margin: 0 0.75rem;
-    }
-}
-
-/* Extra Small Mobile */
-@media (max-width: 480px) {
-    .page-title {
-        font-size: 2rem;
-    }
-
-    .page-subtitle {
-        font-size: 1rem;
-    }
-
-    .logo-text h1 {
-        font-size: 1.15rem;
-    }
-
-    .logo-text p {
-        display: none;
-    }
-
-    .menu-page {
-        padding: 2rem 1.2rem;
-    }
-
-    .category-title {
-        font-size: 1.7rem;
-    }
-
-    .category-subtitle {
-        font-size: 0.95rem;
-    }
-
-    .subcategory-title {
-        font-size: 1.3rem;
-    }
-
-    .menu-name {
-        font-size: 1rem;
-    }
-
-    .menu-price {
-        font-size: 1.05rem;
-    }
-}
-
-/* Touch device improvements */
-@media (hover: none) and (pointer: coarse) {
-    .menu-item {
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
-        touch-action: manipulation;
-    }
-
-    .hamburger {
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .nav-menu li a {
-        padding: 1.2rem 0;
-        min-height: 48px;
-        display: flex;
-        align-items: center;
-    }
-}
+        body { font-family: 'Inter', 'Sarabun', sans-serif; }
+        
+        /* ซ่อน Scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* การจัดวาง Masonry */
+        .masonry-grid {
+            columns: 2;
+            column-gap: 1rem;
+        }
+        @media (min-width: 768px) { .masonry-grid { columns: 3; } }
+        @media (min-width: 1024px) { .masonry-grid { columns: 4; } }
+        @media (min-width: 1280px) { .masonry-grid { columns: 5; } }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+
+        /* ปุ่มหมวดหมู่ */
+        .cat-active { background-color: #111827; color: white; border-color: #111827; }
+        .cat-inactive { background-color: white; color: #111827; border-color: #E5E7EB; }
+        .cat-inactive:hover { background-color: #F3F4F6; }
+
+        /* Animation */
+        @keyframes scaleUp {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-modal { animation: scaleUp 0.3s ease-out forwards; }
     </style>
 </head>
-<body>
-    <!-- Navigation Bar -->
-    <header id="navbar">
-        <div class="nav-container">
-            <div class="logo" onclick="window.location.href='./index.html'" style="cursor: pointer;">
-                <img src="https://scontent.fnak3-1.fna.fbcdn.net/v/t39.30808-6/487040832_1202643561867554_4220306532272459921_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=uXti3MKi6wQQ7kNvwHA7u1W&_nc_oc=AdnFheAaxSwva9abbdWhJvfOltT4jjBC03droEqhH88_26JPWvaGPoDTZ1nNrQjORWvKtcPvuKxaBBGTFYgVKUBm&_nc_zt=23&_nc_ht=scontent.fnak3-1.fna&_nc_gid=BHBxX78Dw1ShnVDx6LquOg&oh=00_AfjLTNL6cHuCjqCF4LMuV6vO_TwPbO1NytGJOwyZmeubhA&oe=691EFDF9" alt="โลโก้ร้านหวานเจี๊ยบ">
-                <div class="logo-text">
-                    <h1>หวานเจี๊ยบ</h1>
-                    <p>Wahn Jeab Restaurant</p>
-                </div>
-            </div>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="./index.html">หน้าแรก</a></li>
-                    <li><a href="./menu.html" class="active">เมนูอาหาร</a></li>
-                    <li><a href="./index.html#about">เกี่ยวกับเรา</a></li>
-                    <li><a href="./index.html#gallery">แกลเลอรี่</a></li>
-                    <li><a href="./index.html#contact">ติดต่อเรา</a></li>
-                </ul>
-            </nav>
-            <button id="menu-toggle" class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
+<body class="bg-gray-50 text-gray-900">
 
-    <!-- Search Section -->
-    <section class="search-section">
-        <div class="container">
-            <h1 class="page-title">เมนูอาหาร</h1>
-            <p class="page-subtitle">Food Menu</p>
-            <div class="search-box">
-                <ion-icon name="search-outline"></ion-icon>
-                <input type="text" id="menu-search" placeholder="ค้นหาเมนูอาหาร...">
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-gray-100">
+        <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='./index.html'">
+                <img src="https://scontent.fbkk10-1.fna.fbcdn.net/v/t39.30808-1/487040832_1202643561867554_4220306532272459921_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=107&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeHx9KxTs_lQ_4Wl4e0JrsXThd8rRQikEseF3ytFCKQSx0xef4B3mZiymwQROep6AkOQpgGg5wAN7mevt8i4QFN_&_nc_ohc=c-0CuvhnOuQQ7kNvwFsuMlT&_nc_oc=Adl3GS8-Fq4YaUQ8qN8kJB-PTYwvssTs7jsA2OCwMabpOK6W9mMe4vUMEbyobZ2dYAM&_nc_zt=24&_nc_ht=scontent.fbkk10-1.fna&_nc_gid=wa0hZ732cDUHgCIIjMkXlA&oh=00_AfnsA6rXoM5QKpjoK-QYq91NV-V41WBkcCuTxRYMlF3RZQ&oe=694E817B" 
+                     alt="Logo" 
+                     class="w-10 h-10 rounded-full object-cover shadow-md border border-gray-100">
+                <h1 class="text-xl font-bold tracking-tight">WAHN JEAB Sukhumvit97/1</h1>
+            </div>
+
+            <div class="relative w-full md:w-80">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </span>
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="ค้นหาเมนูอาหาร..." 
+                    class="w-full pl-10 pr-4 py-2.5 bg-gray-100 border-none rounded-full text-sm focus:ring-2 focus:ring-red-500 focus:bg-white transition-all outline-none"
+                >
             </div>
         </div>
-    </section>
+    </nav>
 
-    <!-- Menu Pages Container -->
-    <div class="menu-container">
-        
-        <!-- Page 1: เมนูแนะนำ -->
-        <div class="menu-page" data-category="เมนูแนะนำ">
-            <h2 class="category-title">เมนูแนะนำ</h2>
-            <p class="category-subtitle">Recommended Menu</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="ผัดผักบุ้งไฟแดง">
-                    <span class="menu-name">ผัดผักบุ้งไฟแดง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="กระหล่ำปลีผัดน้ำปลา">
-                    <span class="menu-name">กระหล่ำปลีน้ำปลา</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="กระหล่ำปลีผัดพริกขี้หนูสวน">
-                    <span class="menu-name">กระหล่ำปลีกุ้งหมูสับ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แหนมกระดูกหมูน้ำมันงา">
-                    <span class="menu-name">แมงกระพรุนน้ำมันงา</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำกบกรอบ">
-                    <span class="menu-name">ยำผักบุ้งกรอบ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ไก่กรอบซอสมะนาว">
-                    <span class="menu-name">ไก่กรอบซอสมะนาว</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="หมูมะนาว">
-                    <span class="menu-name">หมูมะนาว</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="หมูสับคั่วน้ำปลา">
-                    <span class="menu-name">หมูสับคั่วน้ำปลา</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="คอหมูย่าง">
-                    <span class="menu-name">คอหมูย่าง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="สลัดกุ้งทอด">
-                    <span class="menu-name">สลัดกุ้งทอด</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">180 ฿</span>
-                </div>
-                <div class="menu-item" data-name="กุ้งอบวุ้นเส้น">
-                    <span class="menu-name">กุ้งอบวุ้นเส้น</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">180 ฿</span>
-                </div>
-                <div class="menu-item" data-name="กุ้งแม่น้ำเผา">
-                    <span class="menu-name">กุ้งแช่น้ำปลา</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แซลมอนซาชิมิ">
-                    <span class="menu-name">แซลมอนซาชิมิ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
+    <div class="sticky top-[113px] md:top-[77px] z-30 bg-white/80 backdrop-blur-md py-4 shadow-sm">
+        <div id="category-bar" class="flex gap-3 overflow-x-auto no-scrollbar px-6 max-w-[1600px] mx-auto">
             </div>
-        </div>
-
-        <!-- Page 2: ตำ / ยำ -->
-        <div class="menu-page" data-category="ตำ / ยำ">
-            <h2 class="category-title">ตำ / ยำ</h2>
-            <p class="category-subtitle">Papaya Salad / Spicy Salad</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="ตำปลาร้า">
-                    <span class="menu-name">ตำปลาร้า</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำปูปลาร้า">
-                    <span class="menu-name">ตำปูปลาร้า</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำไทย">
-                    <span class="menu-name">ตำไทย</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำโคราช">
-                    <span class="menu-name">ตำโคราช</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำข้าวโพดไข่เค็ม">
-                    <span class="menu-name">ตำข้าวโพดไข่เค็ม</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำเส้นมะม่วง">
-                    <span class="menu-name">ตำเล็บมือนาง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำกุ้งสด / กุ้งสุก">
-                    <span class="menu-name">ตำกุ้งสด / กุ้งสุก</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำปูม้า">
-                    <span class="menu-name">ตำปูม้า</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำซั่วเส้นหมีหมูยอ / หมูยอทอด">
-                    <span class="menu-name">ตำเส้นเล็กหมูยอ / หมูยอทอด</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 / 120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ตำเส้นเล็กทะเล">
-                    <span class="menu-name">ตำเส้นเล็กทะเล</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำมาม่าหมูสับ">
-                    <span class="menu-name">ยำมาม่าหมูสับ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำวุ้นเส้นทะเล">
-                    <span class="menu-name">ยำวุ้นเส้นทะเล</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำขนมจีนปลาร้า">
-                    <span class="menu-name">ยำวุ้นเส้นโบราณ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำขนมจีนหมูสับ">
-                    <span class="menu-name">ยำวุ้นเส้นหมูสับ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำรวมมิตร">
-                    <span class="menu-name">ยำรวมมิตร</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำวุ้นเส้นรวมมิตร">
-                    <span class="menu-name">ยำวุ้นเส้นรวมมิตร</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ยำไข่ดาว">
-                    <span class="menu-name">ยำไข่ดาว</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เหลาสามหาย กุ้ง ม่อน หอย">
-                    <span class="menu-name">เหลาสามหาย กุ้ง ม่อน หอย</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เหลาส้มตำไข่แดง">
-                    <span class="menu-name">เหลาแซลมอนไข่แดง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 3: เมนูทอด -->
-        <div class="menu-page" data-category="เมนูทอด">
-            <h2 class="category-title">เมนูทอด</h2>
-            <p class="category-subtitle">Fried Menu</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="สามชั้นสไลซ์ทอดน้ำปลา">
-                    <span class="menu-name">สามชั้นสไลซ์ทอดน้ำปลา</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="กุ้งทอด">
-                    <span class="menu-name">กุ้งทอด</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ปลาสวรรค์">
-                    <span class="menu-name">ปลาสวรรค์</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ไก่คาราเกะ">
-                    <span class="menu-name">ไก่คาราเกะ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เอ็นไก่ทอด">
-                    <span class="menu-name">เอ็นไก่ทอด</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ปีกไก่ทอด">
-                    <span class="menu-name">ปีกไก่ทอด</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ปีกไก่ทอดตะไคร้">
-                    <span class="menu-name">ปีกไก่ทอดตะไคร้</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">140 ฿</span>
-                </div>
-                <div class="menu-item" data-name="หมูหมักคั่ว">
-                    <span class="menu-name">หมูทงคัตสึ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ไก่คั่วคะน้า">
-                    <span class="menu-name">ไก่ทงคัตสึ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เนื้อแดดเดียว">
-                    <span class="menu-name">เนื้อแดดเดียว</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="หมูแดดเดียว">
-                    <span class="menu-name">หมูแดดเดียว</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">150 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เฟรนซ์ฟรายส์">
-                    <span class="menu-name">เฟรนซ์ฟรายส์</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="นักเก็ตไก่">
-                    <span class="menu-name">นักเก็ตไก่</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ไข่ซูชิ">
-                    <span class="menu-name">ไข่เจียวกรอบ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">70 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ไข่เจียวหมูสับ">
-                    <span class="menu-name">ไข่เจียวหมูสับ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แหนมซี่โครงหมูทอด">
-                    <span class="menu-name">แหนมซี่โครงหมูทอด</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">140 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ปลากระพงน้ำปลาสมุนไพร">
-                    <span class="menu-name">ปลากระพงน้ำปลา/สมุนไพร</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 4: เมนูต้ม -->
-        <div class="menu-page" data-category="เมนูต้ม">
-            <h2 class="category-title">เมนูต้ม</h2>
-            <p class="category-subtitle">Soup Menu</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="ต้มยำทะเล ข้น / ใส">
-                    <span class="menu-name">ต้มยำทะเล ข้น / ใส</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">250 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แกงจืดไข่น้ำ">
-                    <span class="menu-name">แกงจืดไข่น้ำ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">200 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แกงจืดสาหร่าย">
-                    <span class="menu-name">แกงจืดสาหร่าย</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">200 ฿</span>
-                </div>
-                <div class="menu-item" data-name="มาม่า WORK">
-                    <span class="menu-name">มาม่า WORK</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 5: หมูกระทะ -->
-        <div class="menu-page" data-category="หมูกระทะ">
-            <h2 class="category-title">หมูกระทะ</h2>
-            <p class="category-subtitle">Moo Kata (Thai BBQ)</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="ชุดหมูรวม">
-                    <span class="menu-name">ชุดหมูรวม</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ชุดหมูทะเลรวม">
-                    <span class="menu-name">ชุดหมูทะเลรวม</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">550 ฿</span>
-                </div>
-                <div class="menu-item" data-name="สามชั้น">
-                    <span class="menu-name">สามชั้น</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="หมูหมัก">
-                    <span class="menu-name">หมูหมัก</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="หมูสันคอ">
-                    <span class="menu-name">หมูสันคอ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="หมูสันนอก">
-                    <span class="menu-name">หมูสันนอก</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เนื้อไก่หมัก">
-                    <span class="menu-name">เนื้อไก่หมัก</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แฮมหมู">
-                    <span class="menu-name">แฮมหมู</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เบคอน">
-                    <span class="menu-name">เบคอน</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="มันหมู">
-                    <span class="menu-name">มันหมู</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 6: จิ้มจุ่ม + ทะเล + ผัก -->
-        <div class="menu-page" data-category="จิ้มจุ่ม">
-            <h2 class="category-title">จิ้มจุ่ม</h2>
-            <p class="category-subtitle">Hot Pot</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="ชุดหมูรวม">
-                    <span class="menu-name">ชุดหมูรวม</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">250 / 350 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ชุดทะเลรวม">
-                    <span class="menu-name">ชุดทะเลรวม</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">550 ฿</span>
-                </div>
-            </div>
-
-            <h3 class="subcategory-title">ทะเล</h3>
-            <p class="subcategory-subtitle">Seafood</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="กุ้ง">
-                    <span class="menu-name">กุ้ง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ปลาหมึก">
-                    <span class="menu-name">ปลาหมึก</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ปลาหมึกกรอบ">
-                    <span class="menu-name">ปลาหมึกกรอบ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แมงกระพรุน">
-                    <span class="menu-name">แมงกระพรุน</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ปลาดอลลี่">
-                    <span class="menu-name">ปลาดอลลี่</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">80 ฿</span>
-                </div>
-            </div>
-
-            <h3 class="subcategory-title">ผัก</h3>
-            <p class="subcategory-subtitle">Vegetables</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="ผักบุ้ง">
-                    <span class="menu-name">ผักบุ้ง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="กะหล่ำ">
-                    <span class="menu-name">กะหล่ำ</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="แครอท">
-                    <span class="menu-name">แครอท</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ขึ้นฉ่าย">
-                    <span class="menu-name">ขึ้นฉ่าย</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ข้าวโพด">
-                    <span class="menu-name">ข้าวโพด</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เห็ดเข็มทอง">
-                    <span class="menu-name">เห็ดเข็มทอง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ใบโหระพา">
-                    <span class="menu-name">ใบโหระพา</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="วุ้นเส้น">
-                    <span class="menu-name">วุ้นเส้น</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="มาม่า">
-                    <span class="menu-name">มาม่า</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ผงหมาล่า">
-                    <span class="menu-name">ผงหมาล่า</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">40 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ไข่ไก่">
-                    <span class="menu-name">ไข่ไก่</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">15 ฿</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page 7: เครื่องดื่ม -->
-        <div class="menu-page" data-category="เครื่องดื่ม">
-            <h2 class="category-title">เครื่องดื่ม — ซอฟต์ดริงก์</h2>
-            <p class="category-subtitle">Soft Drinks</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="โค้ก">
-                    <span class="menu-name">โค้ก</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="เป๊ปซี่">
-                    <span class="menu-name">เป๊ปซี่</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="ชเวปส์">
-                    <span class="menu-name">ชเวปส์</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="น้ำเปล่า">
-                    <span class="menu-name">น้ำเปล่า</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="โซดา">
-                    <span class="menu-name">โซดา</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 ฿</span>
-                </div>
-                <div class="menu-item" data-name="น้ำแข็ง">
-                    <span class="menu-name">น้ำแข็ง</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">30 / 60 ฿</span>
-                </div>
-            </div>
-
-            <h3 class="subcategory-title">เครื่องดื่ม — แอลกอฮอล์</h3>
-            <p class="subcategory-subtitle">Alcoholic Beverages</p>
-            <div class="menu-items">
-                <div class="menu-item" data-name="Singha Beer">
-                    <span class="menu-name">Singha Beer</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">120 ฿</span>
-                </div>
-                <div class="menu-item" data-name="Chang Beer">
-                    <span class="menu-name">Chang Beer</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">100 ฿</span>
-                </div>
-                <div class="menu-item" data-name="Regency (Ban)">
-                    <span class="menu-name">Regency (Ban)</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">595 ฿</span>
-                </div>
-                <div class="menu-item" data-name="Hong Thong (Ban)">
-                    <span class="menu-name">Hong Thong (Ban)</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">259 ฿</span>
-                </div>
-                <div class="menu-item" data-name="SangSom (Ban)">
-                    <span class="menu-name">SangSom (Ban)</span>
-                    <span class="menu-dots"></span>
-                    <span class="menu-price">350 ฿</span>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="https://scontent.fnak3-1.fna.fbcdn.net/v/t39.30808-6/487040832_1202643561867554_4220306532272459921_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=uXti3MKi6wQQ7kNvwHA7u1W&_nc_oc=AdnFheAaxSwva9abbdWhJvfOltT4jjBC03droEqhH88_26JPWvaGPoDTZ1nNrQjORWvKtcPvuKxaBBGTFYgVKUBm&_nc_zt=23&_nc_ht=scontent.fnak3-1.fna&_nc_gid=BHBxX78Dw1ShnVDx6LquOg&oh=00_AfjLTNL6cHuCjqCF4LMuV6vO_TwPbO1NytGJOwyZmeubhA&oe=691EFDF9" alt="หวานเจี๊ยบ">
-                    <h3>หวานเจี๊ยบ</h3>
-                    <p>Wahn Jeab Restaurant</p>
+    <main class="max-w-[1600px] mx-auto px-6 py-6">
+        <div id="gallery-grid" class="masonry-grid">
+            </div>
+
+        <div id="empty-state" class="hidden flex flex-col items-center justify-center py-24 text-gray-400">
+            <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <p class="text-xl font-medium">ไม่พบเมนูที่คุณกำลังมองหา</p>
+        </div>
+    </main>
+
+    <div id="modal-overlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div id="modal-card" class="bg-white w-full max-w-5xl rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col md:flex-row relative animate-modal max-h-[90vh]">
+            
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-10 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-transform hover:scale-110">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+
+            <div class="w-full md:w-1/2 h-72 md:h-auto overflow-hidden">
+                <img id="modal-img" class="w-full h-full object-cover" src="" alt="">
+            </div>
+
+            <div class="w-full md:w-1/2 p-10 flex flex-col overflow-y-auto no-scrollbar">
+                <div class="mb-4">
+                    <span id="modal-cat" class="text-xs font-bold uppercase tracking-widest text-red-600">Category</span>
                 </div>
-                <p class="footer-text">© 2025 ร้านหวานเจี๊ยบ. All rights reserved.</p>
+                <h2 id="modal-title" class="text-4xl font-bold mb-4 leading-tight">Food Title</h2>
+                <p id="modal-price" class="text-2xl font-semibold text-gray-800 mb-6">$0.00</p>
+                
+                <p id="modal-desc" class="text-gray-600 text-lg leading-relaxed mb-8">Description...</p>
+
+                <div class="mb-10">
+                    <h4 class="text-sm font-bold text-gray-900 mb-3">Highlights</h4>
+                    <div id="modal-tags" class="flex flex-wrap gap-2"></div>
+                </div>
+
+                <div class="mt-auto flex gap-3">
+                    <button class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-full transition-all active:scale-95 shadow-lg shadow-red-200">
+                        Save to Favorites
+                    </button>
+                    <button class="px-6 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-4 rounded-full transition-all">
+                        Share
+                    </button>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        // ==================== Menu Toggle (Hamburger) ====================
-const menuToggle = document.getElementById('menu-toggle');
-const navMenu = document.querySelector('.nav-menu');
+         // ข้อมูลเมนูอาหารทั้งหมด (79 รายการ)
+        const menuData = [
+            // --- เมนูแนะนำ ---
+            { id: 1, title: "ผัดผักบุ้งไฟแดง", category: "เมนูแนะนำ", price: "฿100.00", image: "img/", desc: "ผักบุ้งสดผัดไฟแรง หอมกลิ่นกระทะ", tags: ["Vegetarian", "Recommend"] },
+            { id: 2, title: "กระหล่ำปลีน้ำปลา", category: "เมนูแนะนำ", price: "฿100.00", image: "img/", desc: "กระหล่ำปลีทอดน้ำปลาจนหอม กรอบ อร่อย", tags: ["Classic"] },
+            { id: 3, title: "กระหล่ำปลีกุ้งหมูสับ", category: "เมนูแนะนำ", price: "฿150.00", image: "img/", desc: "เพิ่มโปรตีนด้วยกุ้งและหมูสับเน้นๆ", tags: ["Best Seller"] },
+            { id: 4, title: "แมงกระพรุนน้ำมันงา", category: "เมนูแนะนำ", price: "฿150.00", image: "img/", desc: "แมงกระพรุนเนื้อกรุบ คลุกน้ำมันงาหอมสไตล์จีน", tags: ["Appetizer"] },
+            { id: 5, title: "ยำผักบุ้งกรอบ", category: "เมนูแนะนำ", price: "฿150.00", image: "img/", desc: "ผักบุ้งชุบแป้งทอดกรอบ เสิร์ฟพร้อมน้ำยำ", tags: ["Crispy"] },
+            { id: 6, title: "ไก่กรอบซอสมะนาว", category: "เมนูแนะนำ", price: "฿120.00", image: "img/", desc: "ไก่ทอดกรอบ ราดซอสมะนาวเปรี้ยวหวานลงตัว", tags: ["Favorite"] },
+            { id: 7, title: "หมูมะนาว", category: "เมนูแนะนำ", price: "฿120.00", image: "img/", desc: "หมูนุ่มราดน้ำจิ้มมะนาวพริกสด แซ่บจี๊ด", tags: ["Spicy"] },
+            { id: 8, title: "หมูสับคั่วน้ำปลา", category: "เมนูแนะนำ", price: "฿120.00", image: "img/", desc: "หมูสับคั่วจนหอมน้ำปลา เค็มหวานกำลังดี", tags: ["Homemade"] },
+            { id: 9, title: "คอหมูย่าง", category: "เมนูแนะนำ", price: "฿150.00", image: "img/", desc: "คอหมูหมักย่างเตาถ่าน หอมนุ่มชุ่มฉ่ำ", tags: ["Recommend"] },
+            { id: 10, title: "สลัดกุ้งทอด", category: "เมนูแนะนำ", price: "฿180.00", image: "img/", desc: "กุ้งทอดตัวใหญ่ เสิร์ฟพร้อมผักสลัดสด", tags: ["Healthy"] },
+            { id: 11, title: "กุ้งอบวุ้นเส้น", category: "เมนูแนะนำ", price: "฿180.00", image: "img/", desc: "กุ้งสดอบวุ้นเส้นเครื่องเทศเข้มข้น", tags: ["Traditional"] },
+            { id: 12, title: "กุ้งแช่น้ำปลา", category: "เมนูแนะนำ", price: "฿350.00", image: "img/", desc: "กุ้งสดเนื้อเด้งในน้ำปลาปรุงรส แซ่บสะใจ", tags: ["Seafood"] },
+            { id: 13, title: "แซลมอนซาชิมิ", category: "เมนูแนะนำ", price: "฿350.00", image: "img/", desc: "ปลาแซลมอนสดแล่ชิ้นหนา คุณภาพพรีเมียม", tags: ["Raw", "Fresh"] },
 
-// Toggle menu when hamburger is clicked
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    navMenu.classList.toggle('active');
-    
-    // Prevent body scroll when menu is open
-    if (navMenu.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = 'auto';
-    }
-});
+            // --- ตำ / ยำ ---
+            { id: 14, title: "ตำปลาร้า", category: "ตำ / ยำ", price: "฿80.00", image: "img/", desc: "ส้มตำปลาร้ารสจัดจ้าน กลิ่นหอมนัว", tags: ["Isaan Style"] },
+            { id: 15, title: "ตำปูปลาร้า", category: "ตำ / ยำ", price: "฿100.00", image: "img/", desc: "ส้มตำปูใส่ปลาร้า รสชาติอีสานแท้ๆ", tags: ["Spicy"] },
+            { id: 16, title: "ตำไทย", category: "ตำ / ยำ", price: "฿100.00", image: "img/", desc: "ส้มตำไทยรสชาติเปรี้ยวหวาน ครบเครื่อง", tags: ["Original"] },
+            { id: 17, title: "ตำโคราช", category: "ตำ / ยำ", price: "฿80.00", image: "img/", desc: "ลูกผสมตำไทยและปลาร้า อร่อยลงตัว", tags: ["Spicy"] },
+            { id: 18, title: "ตำข้าวโพดไข่เค็ม", category: "ตำ / ยำ", price: "฿120.00", image: "img/", desc: "ตำข้าวโพดหวานพร้อมไข่เค็มมันๆ", tags: ["Sweet & Salty"] },
+            { id: 19, title: "ตำเล็บมือนาง", category: "ตำ / ยำ", price: "฿100.00", image: "img/", desc: "ส้มตำใส่ตีนไก่ถอดกระดูก เคี้ยวกรุบ", tags: ["Hot"] },
+            { id: 20, title: "ตำกุ้งสด / กุ้งสุก", category: "ตำ / ยำ", price: "฿120.00", image: "img/", desc: "เลือกได้ตามใจชอบ กุ้งสดหรือกุ้งสุกเนื้อหวาน", tags: ["Seafood"] },
+            { id: 21, title: "ตำปูม้า", category: "ตำ / ยำ", price: "฿150.00", image: "img/", desc: "ส้มตำปูม้าสดๆ รสชาติแซ่บนัว", tags: ["Seafood"] },
+            { id: 22, title: "ตำเส้นเล็กหมูยอ / หมูยอทอด", category: "ตำ / ยำ", price: "฿100 / 120", image: "img/", desc: "เส้นเล็กเหนียวนุ่มกับหมูยอเกรดพรีเมียม", tags: ["Must Try"] },
+            { id: 23, title: "ตำเส้นเล็กทะเล", category: "ตำ / ยำ", price: "฿150.00", image: "img/", desc: "รวมมิตรทะเลกับเส้นเล็กเหนียวนุ่ม", tags: ["New"] },
+            { id: 24, title: "ยำมาม่าหมูสับ", category: "ตำ / ยำ", price: "฿100.00", image: "img/", desc: "ยำมาม่ารสจัดจ้าน เครื่องหมูสับเน้นๆ", tags: ["Classic"] },
+            { id: 25, title: "ยำวุ้นเส้นทะเล", category: "ตำ / ยำ", price: "฿100.00", image: "img/", desc: "ยำวุ้นเส้นใส่กุ้งและปลาหมึกสดๆ", tags: ["Seafood"] },
+            { id: 26, title: "ยำวุ้นเส้นโบราณ", category: "ตำ / ยำ", price: "฿80.00", image: "img/", desc: "ยำวุ้นเส้นสูตรดั้งเดิม ใส่ถั่วและกุ้งแห้ง", tags: ["Authentic"] },
+            { id: 27, title: "ยำวุ้นเส้นหมูสับ", category: "ตำ / ยำ", price: "฿120.00", image: "img/", desc: "ยำวุ้นเส้นใส่หมูสับแบบจุกๆ", tags: ["Meat"] },
+            { id: 28, title: "ยำรวมมิตร", category: "ตำ / ยำ", price: "฿150.00", image: "img/", desc: "ยำที่รวมทุกความอร่อยไว้ในจานเดียว", tags: ["Mixed"] },
+            { id: 29, title: "ยำวุ้นเส้นรวมมิตร", category: "ตำ / ยำ", price: "฿150.00", image: "img/", desc: "วุ้นเส้นคลุกเคล้าเครื่องทะเลและหมูสับ", tags: ["Popular"] },
+            { id: 30, title: "ยำไข่ดาว", category: "ตำ / ยำ", price: "฿100.00", image: "img/", desc: "ไข่ดาวทอดกรอบ นำมายำรสเปรี้ยวหวาน", tags: ["Vegetarian Option"] },
+            { id: 31, title: "เหลาสามหาย (กุ้ง ม่อน หอย)", category: "ตำ / ยำ", price: "฿350.00", image: "img/", desc: "สามทหารเสือแห่งท้องทะเลในน้ำยำนัวๆ", tags: ["Premium"] },
+            { id: 32, title: "เหลาแซลมอนไข่แดง", category: "ตำ / ยำ", price: "฿350.00", image: "img/", desc: "แซลมอนสดและไข่แดงเค็ม ในน้ำยำสุดแซ่บ", tags: ["Special"] },
 
-// Close menu when clicking on a link
-const navLinks = document.querySelectorAll('.nav-menu a');
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        navMenu.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-});
+            // --- เมนูทอด ---
+            { id: 33, title: "สามชั้นสไลซ์ทอดน้ำปลา", category: "เมนูทอด", price: "฿120.00", image: "img/", desc: "หมูสามชั้นบางกรอบ หอมน้ำปลาแท้", tags: ["Crispy"] },
+            { id: 34, title: "กุ้งทอด", category: "เมนูทอด", price: "฿150.00", image: "img/", desc: "กุ้งชุบแป้งทอดสีเหลืองทอง กรอบนอกนุ่มใน", tags: ["Kids Friendly"] },
+            { id: 35, title: "ปลาสวรรค์", category: "เมนูทอด", price: "฿100.00", image: "img/", desc: "เนื้อปลาปรุงรสทอด ทานเล่นเพลินๆ", tags: ["Snack"] },
+            { id: 36, title: "ไก่คาราเกะ", category: "เมนูทอด", price: "฿100.00", image: "img/", desc: "ไก่ทอดสไตล์ญี่ปุ่น กรอบและหอม", tags: ["Japanese"] },
+            { id: 37, title: "เอ็นไก่ทอด", category: "เมนูทอด", price: "฿120.00", image: "img/", desc: "เอ็นข้อไก่ทอด เคี้ยวกรุบๆ สู้ฟัน", tags: ["Appetizer"] },
+            { id: 38, title: "ปีกไก่ทอด", category: "เมนูทอด", price: "฿120.00", image: "img/", desc: "ปีกไก่ทอดสูตรเฉพาะของร้าน", tags: ["All Time Favorite"] },
+            { id: 39, title: "ปีกไก่ทอดตะไคร้", category: "เมนูทอด", price: "฿140.00", image: "img/", desc: "ปีกไก่ทอดหอมกลิ่นสมุนไพรตะไคร้กรอบ", tags: ["Healthy Herbs"] },
+            { id: 40, title: "หมูทงคัตสึ", category: "เมนูทอด", price: "฿120.00", image: "img/", desc: "หมูชุบเกล็ดขนมปังทอดหนานุ่ม", tags: ["Meat"] },
+            { id: 41, title: "ไก่ทงคัตสึ", category: "เมนูทอด", price: "฿120.00", image: "img/", desc: "ไก่ชุบเกล็ดขนมปังทอดชิ้นใหญ่", tags: ["Poultry"] },
+            { id: 42, title: "เนื้อแดดเดียว", category: "เมนูทอด", price: "฿150.00", image: "img/", desc: "เนื้อวัวคุณภาพหมักตากแห้งทอดจนหอม", tags: ["Beef"] },
+            { id: 43, title: "หมูแดดเดียว", category: "เมนูทอด", price: "฿150.00", image: "img/", desc: "หมูหมักตากแห้งทอด รสชาติเข้มข้น", tags: ["Meat"] },
+            { id: 44, title: "เฟรนซ์ฟรายส์", category: "เมนูทอด", price: "฿100.00", image: "img/", desc: "มันฝรั่งทอดร้อนๆ โรยเกลือเล็กน้อย", tags: ["Snack"] },
+            { id: 45, title: "นักเก็ตไก่", category: "เมนูทอด", price: "฿100.00", image: "img/", desc: "เนื้อไก่บดชุบแป้งทอด ทานง่าย", tags: ["Kids"] },
+            { id: 46, title: "ไข่เจียวกรอบ", category: "เมนูทอด", price: "฿70.00", image: "img/", desc: "ไข่เจียวฟูฟู ทอดจนกรอบเหลือง", tags: ["Simple"] },
+            { id: 47, title: "ไข่เจียวหมูสับ", category: "เมนูทอด", price: "฿100.00", image: "img/", desc: "ไข่เจียวเนื้อแน่น ใส่หมูสับเน้นๆ", tags: ["Popular"] },
+            { id: 48, title: "แหนมซี่โครงหมูทอด", category: "เมนูทอด", price: "฿140.00", image: "img/", desc: "ซี่โครงหมูหมักแหนม รสเปรี้ยวกำลังดี", tags: ["Local"] },
+            { id: 49, title: "ปลากระพงน้ำปลา / สมุนไพร", category: "เมนูทอด", price: "฿350.00", image: "img/", desc: "ปลากระพงทอดตัวโต เลือกน้ำปลาหรือสมุนไพร", tags: ["Main Dish"] },
 
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (navMenu.classList.contains('active') && 
-        !navMenu.contains(e.target) && 
-        !menuToggle.contains(e.target)) {
-        menuToggle.classList.remove('active');
-        navMenu.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-});
+            // --- เมนูต้ม ---
+            { id: 50, title: "ต้มยำทะเล (ข้น / ใส)", category: "เมนูต้ม", price: "฿250.00", image: "img/", desc: "ต้มยำรสแซ่บ เครื่องทะเลจัดเต็ม", tags: ["Spicy Soup"] },
+            { id: 51, title: "แกงจืดไข่น้ำ", category: "เมนูต้ม", price: "฿200.00", image: "img/", desc: "ซุปใสร้อนๆ พร้อมไข่เจียวนุ่มๆ", tags: ["Non-Spicy"] },
+            { id: 52, title: "แกงจืดสาหร่าย", category: "เมนูต้ม", price: "฿200.00", image: "img/", desc: "แกงจืดผักกาดขาวใส่สาหร่ายหอมๆ", tags: ["Healthy"] },
+            { id: 53, title: "มาม่า WORK", category: "เมนูต้ม", price: "฿350.00", image: "img/", desc: "มาม่าหม้อไฟเครื่องทะลัก จุใจแน่นอน", tags: ["Huge"] },
 
-// ==================== Navbar Scroll Effect ====================
-const navbar = document.getElementById('navbar');
+            // --- หมูกระทะ ---
+            { id: 54, title: "ชุดหมูรวม", category: "หมูกระทะ", price: "฿350.00", image: "img/", desc: "รวมหมูหมัก สันคอ สามชั้น ครบเครื่อง", tags: ["Set Menu"] },
+            { id: 55, title: "ชุดหมูทะเลรวม", category: "หมูกระทะ", price: "฿550.00", image: "img/", desc: "ชุดใหญ่รวมหมูและซีฟู้ดสดๆ", tags: ["Big Set"] },
+            { id: 56, title: "สามชั้น", category: "หมูกระทะ", price: "฿80.00", image: "img/", desc: "หมูสามชั้นสไลซ์คัดพิเศษ", tags: ["A la carte"] },
+            { id: 57, title: "หมูหมัก", category: "หมูกระทะ", price: "฿80.00", image: "img/", desc: "เนื้อหมูหมักนุ่มสูตรลับของร้าน", tags: ["A la carte"] },
+            { id: 58, title: "หมูสันคอ", category: "หมูกระทะ", price: "฿80.00", image: "img/", desc: "เนื้อสันคอแทรกมัน นุ่มละมุน", tags: ["A la carte"] },
+            { id: 59, title: "หมูสันนอก", category: "หมูกระทะ", price: "฿80.00", image: "img/", desc: "เนื้อสันนอกนุ่มๆ ไร้มัน", tags: ["A la carte"] },
+            { id: 60, title: "เนื้อไก่หมัก", category: "หมูกระทะ", price: "฿80.00", image: "img/", desc: "เนื้อไก่หมักนุ่ม ไขมันต่ำ", tags: ["A la carte"] },
+            { id: 61, title: "แฮมหมู", category: "หมูกระทะ", price: "฿80.00", image: "img/", desc: "แฮมแผ่นคุณภาพดี", tags: ["A la carte"] },
+            { id: 62, title: "เบคอน", category: "หมูกระทะ", price: "฿80.00", image: "img/", desc: "เบคอนรมควัน หอมกรุ่น", tags: ["A la carte"] },
+            { id: 63, title: "มันหมู", category: "หมูกระทะ", price: "฿30.00", image: "img/", desc: "สำหรับทาเตาให้หอม", tags: ["Add-on"] },
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
+            // --- จิ้มจุ่ม ---
+            { id: 64, title: "ชุดหมูรวม (เล็ก/ใหญ่)", category: "จิ้มจุ่ม", price: "฿250 / 350", image: "img/", desc: "จิ้มจุ่มหมูหมักนุ่มๆ พร้อมผักรวม", tags: ["Warm Soup"] },
+            { id: 65, title: "ชุดทะเลรวม", category: "จิ้มจุ่ม", price: "฿550.00", image: "img/", desc: "จิ้มจุ่มเครื่องทะเลเน้นๆ น้ำซุปสมุนไพร", tags: ["Seafood Set"] },
 
-// ==================== Background Color Transition on Scroll ====================
-function updateBackgroundColor() {
-    const scrollPosition = window.scrollY;
-    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercentage = (scrollPosition / documentHeight) * 100;
-    
-    // Start transition after search section (around 30% scroll)
-    if (scrollPercentage > 15) {
-        document.body.classList.add('dark-mode');
-    } else {
-        document.body.classList.remove('dark-mode');
-    }
-    
-    // Smooth gradient transition
-    const darknessLevel = Math.min(scrollPercentage / 50, 1);
-    const r = Math.floor(255 - (255 * darknessLevel));
-    const g = Math.floor(255 - (255 * darknessLevel));
-    const b = Math.floor(255 - (255 * darknessLevel));
-    
-    if (scrollPercentage > 15) {
-        document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-    }
-}
+            // --- เครื่องเคียง (ทะเล/ผัก) ---
+            { id: 66, title: "กุ้ง (สั่งเพิ่ม)", category: "จิ้มจุ่ม/หมูกระทะ", price: "฿100.00", image: "img/", desc: "กุ้งสดเพิ่มความอร่อย", tags: ["Seafood"] },
+            { id: 67, title: "ปลาหมึก (สั่งเพิ่ม)", category: "จิ้มจุ่ม/หมูกระทะ", price: "฿100.00", image: "img/", desc: "ปลาหมึกสด หั่นชิ้นพอดีคำ", tags: ["Seafood"] },
+            { id: 68, title: "แมงกระพรุน (สั่งเพิ่ม)", category: "จิ้มจุ่ม/หมูกระทะ", price: "฿80.00", image: "img/", desc: "แมงกระพรุนลวกกรอบ", tags: ["Seafood"] },
+            { id: 69, title: "วุ้นเส้น / มาม่า", category: "จิ้มจุ่ม/หมูกระทะ", price: "฿30.00", image: "img/", desc: "สำหรับทานคู่กับน้ำซุป", tags: ["Sides"] },
+            { id: 70, title: "ผักบุ้ง / กะหล่ำ / ข้าวโพด", category: "จิ้มจุ่ม/หมูกระทะ", price: "฿30.00", image: "img/", desc: "ผักสดๆ เพื่อสุขภาพ", tags: ["Vegetables"] },
+            { id: 71, title: "ไข่ไก่", category: "จิ้มจุ่ม/หมูกระทะ", price: "฿15.00", image: "img/", desc: "ไข่สดเบอร์ใหม่", tags: ["Add-on"] },
 
-window.addEventListener('scroll', updateBackgroundColor);
+            // --- เครื่องดื่ม ---
+            { id: 72, title: "โค้ก / เป๊ปซี่ / ชเวปส์", category: "เครื่องดื่ม", price: "฿30.00", image: "img/", desc: "น้ำอัดลมเย็นสดชื่น", tags: ["Soft Drink"] },
+            { id: 73, title: "น้ำเปล่า / โซดา", category: "เครื่องดื่ม", price: "฿30.00", image: "img/", desc: "น้ำใสสะอาด / โซดาซ่าๆ", tags: ["Drink"] },
+            { id: 74, title: "น้ำแข็ง (เล็ก/ใหญ่)", category: "เครื่องดื่ม", price: "฿30 / 60", image: "img/", desc: "น้ำแข็งสะอาด เย็นนาน", tags: ["Ice"] },
 
-// ==================== Menu Search Functionality ====================
-const searchInput = document.getElementById('menu-search');
-const menuItems = document.querySelectorAll('.menu-item');
-const menuPages = document.querySelectorAll('.menu-page');
-
-searchInput.addEventListener('input', (e) => {
-    const searchTerm = e.target.value.toLowerCase().trim();
-    
-    // If search is empty, show all items
-    if (searchTerm === '') {
-        menuItems.forEach(item => {
-            item.classList.remove('hidden');
-        });
+            // --- แอลกอฮอล์ ---
+            { id: 75, title: "Singha Beer", category: "เครื่องดื่มแอลกอฮอล์", price: "฿120.00", image: "img/", desc: "เบียร์สิงห์ เย็นจัด", tags: ["Beer"] },
+            { id: 76, title: "Chang Beer", category: "เครื่องดื่มแอลกอฮอล์", price: "฿100.00", image: "img/", desc: "เบียร์ช้าง รสชาติดี", tags: ["Beer"] },
+            { id: 77, title: "Regency (แบน)", category: "เครื่องดื่มแอลกอฮอล์", price: "฿595.00", image: "img/", desc: "บรั่นดีไทยยอดฮิต", tags: ["Spirit"] },
+            { id: 78, title: "Hong Thong (แบน)", category: "เครื่องดื่มแอลกอฮอล์", price: "฿259.00", image: "img/", desc: "เหล้าหงส์ทองยอดนิยม", tags: ["Spirit"] },
+            { id: 79, title: "SangSom (แบน)", category: "เครื่องดื่มแอลกอฮอล์", price: "฿350.00", image: "img/", desc: "เหล้าแสงโสมรสชาติไทย", tags: ["Spirit"] },
         
-        menuPages.forEach(page => {
-            page.style.display = 'block';
-        });
-        return;
-    }
-    
-    // Search through menu items
-    let hasVisibleItems = {};
-    
-    menuItems.forEach(item => {
-        const menuName = item.getAttribute('data-name').toLowerCase();
-        const parentPage = item.closest('.menu-page');
-        const pageCategory = parentPage.getAttribute('data-category');
-        
-        if (menuName.includes(searchTerm)) {
-            item.classList.remove('hidden');
-            hasVisibleItems[pageCategory] = true;
-        } else {
-            item.classList.add('hidden');
-        }
-    });
-    
-    // Hide pages with no visible items
-    menuPages.forEach(page => {
-        const category = page.getAttribute('data-category');
-        if (hasVisibleItems[category]) {
-            page.style.display = 'block';
-        } else {
-            page.style.display = 'none';
-        }
-    });
-});
+            // --- เมนูใหม่ ---
+            { id: 80, title: "ปูอัดซาเซมิ", category: "เมนูแนะนำ", price: "฿149.00", image: "img/", desc: "ปูอัดคุณภาพหั่นชิ้นพอดีคำ เสิร์ฟสไตล์ซาชิมิ เนื้อแน่น หวานละมุน สดชื่นทุกคำ", tags: ["Special"] },
+            { id: 81, title: "ยำกุ้งสด", category: "ตำ / ยำ", price: "฿149.00", image: "img/", desc: "กุ้งสดเด้งคลุกเคล้าน้ำยำรสจัดจ้าน เปรี้ยว เผ็ด เค็ม ครบรส หอมสมุนไพรไทย", tags: ["Special"] },
+            { id: 82, title: "ยำรวมมิตรทะเล", category: "ตำ / ยำ", price: "฿179.00", image: "img/", desc: "รวมซีฟู้ดสดใหม่ทั้งกุ้ง ปลาหมึก และหอย คลุกน้ำยำสูตรเด็ด รสแซ่บถึงใจ", tags: ["Special"] },
+            { id: 83, title: "ไข่ตุ๋นทรงเครื่อง", category: "เมนูแนะนำ", price: "฿249.00", image: "img/", desc: "ไข่ตุ๋นเนื้อนุ่มละมุน ใส่เครื่องแน่นเต็มถ้วย ทั้งกุ้ง หมู และผัก รสชาติกลมกล่อม", tags: ["Special"] }
+            
+        ];
 
-// ==================== Smooth Scroll for Navigation ====================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        
-        if (href === '#' || href === '#home') {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            return;
-        }
-        
-        const target = document.querySelector(href);
-        if (target) {
-            e.preventDefault();
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+        let currentCategory = 'All';
+        let searchQuery = '';
+
+        const gallery = document.getElementById('gallery-grid');
+        const searchInput = document.getElementById('search-input');
+        const categoryBar = document.getElementById('category-bar');
+        const emptyState = document.getElementById('empty-state');
+
+        function init() {
+            renderCategories();
+            renderGallery();
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                renderGallery();
             });
         }
-    });
-});
 
-// ==================== Fade-in Animation on Scroll ====================
-if ('IntersectionObserver' in window) {
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
-                fadeObserver.unobserve(entry.target);
+        function renderCategories() {
+            const categories = ['All', ...new Set(menuData.map(item => item.category))];
+            categoryBar.innerHTML = categories.map(cat => `
+                <button onclick="filterByCategory('${cat}')" 
+                        class="${cat === currentCategory ? 'cat-active' : 'cat-inactive'} px-6 py-2 rounded-full text-sm font-semibold border transition-all whitespace-nowrap">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        window.filterByCategory = (category) => {
+            currentCategory = category;
+            renderCategories();
+            renderGallery();
+        };
+
+        function renderGallery() {
+            const filtered = menuData.filter(item => {
+                const matchCat = (currentCategory === 'All' || item.category === currentCategory);
+                const matchSearch = item.title.toLowerCase().includes(searchQuery) || item.desc.toLowerCase().includes(searchQuery);
+                return matchCat && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                gallery.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                gallery.innerHTML = filtered.map(item => `
+                    <div class="masonry-item relative group cursor-zoom-in rounded-3xl overflow-hidden bg-gray-200" onclick="openModal(${item.id})">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <h3 class="text-white font-bold text-xl">${item.title}</h3>
+                            <p class="text-white/80 text-sm">${item.category}</p>
+                        </div>
+                    </div>
+                `).join('');
             }
+        }
+
+        window.openModal = (id) => {
+            const item = menuData.find(i => i.id === id);
+            document.getElementById('modal-img').src = item.image;
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-cat').innerText = item.category;
+            document.getElementById('modal-price').innerText = item.price;
+            document.getElementById('modal-desc').innerText = item.desc;
+            document.getElementById('modal-tags').innerHTML = item.tags.map(t => `<span class="bg-gray-100 px-4 py-1.5 rounded-full text-xs font-bold text-gray-600">${t}</span>`).join('');
+            
+            document.getElementById('modal-overlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeModal = () => {
+            document.getElementById('modal-overlay').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        };
+
+        document.getElementById('modal-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'modal-overlay') closeModal();
         });
-    }, {
-        threshold: 0.1
-    });
 
-    // Observe menu pages
-    document.querySelectorAll('.menu-page').forEach(page => {
-        page.style.opacity = '0';
-        page.style.transform = 'translateY(30px)';
-        page.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        fadeObserver.observe(page);
-    });
-}
-
-// ==================== Search Clear Button ====================
-searchInput.addEventListener('input', (e) => {
-    if (e.target.value.length > 0) {
-        searchInput.style.paddingRight = '3rem';
-    } else {
-        searchInput.style.paddingRight = '0';
-    }
-});
-
-// ==================== Keyboard Shortcuts ====================
-document.addEventListener('keydown', (e) => {
-    // Press '/' to focus search
-    if (e.key === '/' && !searchInput.contains(document.activeElement)) {
-        e.preventDefault();
-        searchInput.focus();
-    }
-    
-    // Press 'Escape' to clear search
-    if (e.key === 'Escape' && searchInput.contains(document.activeElement)) {
-        searchInput.value = '';
-        searchInput.dispatchEvent(new Event('input'));
-        searchInput.blur();
-    }
-});
-
-// ==================== Menu Item Click Animation ====================
-menuItems.forEach(item => {
-    item.addEventListener('click', function() {
-        // Add a subtle pulse animation
-        this.style.transform = 'scale(0.98)';
-        setTimeout(() => {
-            this.style.transform = 'scale(1)';
-        }, 150);
-    });
-});
-
-// ==================== Initialize ====================
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('🍽️ Menu page loaded successfully!');
-    
-    // Add loading animation complete class
-    document.body.classList.add('loaded');
-    
-    // Log menu statistics
-    const totalItems = menuItems.length;
-    const totalCategories = menuPages.length;
-    console.log(`📊 Total menu items: ${totalItems}`);
-    console.log(`📁 Total categories: ${totalCategories}`);
-    
-    // Set initial background color
-    updateBackgroundColor();
-});
-
-// ==================== Performance Optimization ====================
-// Debounce scroll event
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-        window.cancelAnimationFrame(scrollTimeout);
-    }
-    
-    scrollTimeout = window.requestAnimationFrame(() => {
-        updateBackgroundColor();
-    });
-}, { passive: true });
-
-// ==================== Search Analytics (Optional) ====================
-let searchTimeout;
-searchInput.addEventListener('input', (e) => {
-    clearTimeout(searchTimeout);
-    
-    searchTimeout = setTimeout(() => {
-        const searchTerm = e.target.value.trim();
-        if (searchTerm.length > 2) {
-            console.log(`🔍 User searched for: "${searchTerm}"`);
-            // You can add analytics tracking here
-        }
-    }, 500);
-});
-
-// ==================== Scroll to Top Button (Optional Enhancement) ====================
-// Create scroll to top button
-const scrollTopBtn = document.createElement('button');
-scrollTopBtn.innerHTML = '↑';
-scrollTopBtn.className = 'scroll-top-btn';
-scrollTopBtn.style.cssText = `
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    font-size: 1.5rem;
-    cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 999;
-`;
-
-document.body.appendChild(scrollTopBtn);
-
-// Show/hide scroll to top button
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-        scrollTopBtn.style.opacity = '1';
-        scrollTopBtn.style.visibility = 'visible';
-    } else {
-        scrollTopBtn.style.opacity = '0';
-        scrollTopBtn.style.visibility = 'hidden';
-    }
-});
-
-// Scroll to top on click
-scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Hover effect for scroll to top button
-scrollTopBtn.addEventListener('mouseenter', () => {
-    scrollTopBtn.style.background = 'rgba(255, 255, 255, 0.9)';
-    scrollTopBtn.style.color = '#000';
-    scrollTopBtn.style.transform = 'scale(1.1)';
-});
-
-scrollTopBtn.addEventListener('mouseleave', () => {
-    scrollTopBtn.style.background = 'rgba(0, 0, 0, 0.8)';
-    scrollTopBtn.style.color = '#fff';
-    scrollTopBtn.style.transform = 'scale(1)';
-});
-
-// ==================== Print Menu Functionality (Optional) ====================
-function printMenu() {
-    window.print();
-}
-
-// Add print styles
-const printStyles = document.createElement('style');
-printStyles.textContent = `
-    @media print {
-        #navbar,
-        .search-section,
-        .footer,
-        .scroll-top-btn {
-            display: none !important;
-        }
-        
-        .menu-page {
-            page-break-inside: avoid;
-            box-shadow: none;
-            margin-bottom: 2rem;
-        }
-        
-        body {
-            background: white !important;
-            color: black !important;
-        }
-    }
-`;
-document.head.appendChild(printStyles);
+        init();
     </script>
 </body>
 </html>
